@@ -5,32 +5,32 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  /// Busca todos os produtos do Supabase
+  // Busca todos os produtos do Supabase
   const { data: produtos } = await supabase.from('products').select('*');
+  
+  // Proteção: Garante que seja um array vazio caso o banco demore a responder
+  const produtosLista = produtos || [];
 
-  // Limitando cada sessão para exibir apenas 5 produtos
-  const produtosMaisVendidos = produtos?.slice(0, 5) || [];
-  const produtosCombustivel = produtos.filter(produto => {
-  const tituloLower = produto.title.toLowerCase();
-  
-  // Se tiver a palavra "kit" no nome, ele ignora e não mostra na lista
-  if (tituloLower.includes('kit')) {
-    return false;
-  }
- // Se não for kit, ele verifica se é filtro de combustível (com ou sem acento)
-  return tituloLower.includes('combustível') || tituloLower.includes('combustivel');
-});
- const produtosOleo = produtos.filter(produto => {
-  const tituloLower = produto.title.toLowerCase();
-  
-  // 1. Barra qualquer produto que tenha "kit" no nome
-  if (tituloLower.includes('kit')) {
-    return false;
-  }
-  
-  // 2. Se não for kit, busca por óleo (com ou sem acento)
-  return tituloLower.includes('óleo') || tituloLower.includes('oleo');
-});
+  // FILTRO: AR
+  const produtosAr = produtosLista.filter(produto => {
+    const tituloLower = produto.title.toLowerCase();
+    if (tituloLower.includes('kit')) return false;
+    return tituloLower.includes(' de ar');
+  });
+
+  // FILTRO: COMBUSTÍVEL
+  const produtosCombustivel = produtosLista.filter(produto => {
+    const tituloLower = produto.title.toLowerCase();
+    if (tituloLower.includes('kit')) return false;
+    return tituloLower.includes('combustível') || tituloLower.includes('combustivel');
+  });
+
+  // FILTRO: ÓLEO
+  const produtosOleo = produtosLista.filter(produto => {
+    const tituloLower = produto.title.toLowerCase();
+    if (tituloLower.includes('kit')) return false;
+    return tituloLower.includes('óleo') || tituloLower.includes('oleo');
+  });
 
   return (
     <div className="bg-brand-bg text-brand-dark font-sans antialiased min-h-screen">
@@ -85,14 +85,13 @@ export default async function Home() {
       </nav>
 
       <main>
-        {/* SEÇÃO: MAIS VENDIDOS */}
+        {/* SEÇÃO: FILTROS DE AR */}
         <section className="py-10 text-center">
           <h2 className="text-[1.8rem] font-extrabold mb-7 uppercase text-brand-dark">FILTRO DE AR</h2>
           <div className="flex items-center justify-center gap-5 w-full max-w-[1500px] mx-auto px-4 lg:px-[5%] relative">
 
             <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory w-full md:justify-center">
-              {/* Loop dos Produtos do Supabase */}
-              {produtosMaisVendidos.map((produto) => (
+              {produtosAr.map((produto) => (
                 <Link href={`/produto/${produto.procod}`} key={produto.procod} className="bg-white border border-[#ccc] rounded-lg p-5 min-w-[240px] max-w-[240px] text-center snap-center hover:-translate-y-2 transition-all duration-300 block">
                   <div className="w-full h-32 flex items-center justify-center mb-4">
                     <img 
