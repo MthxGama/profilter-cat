@@ -69,7 +69,7 @@ export default async function Home() {
       <main>
         {/* SEÇÃO: MAIS VENDIDOS */}
         <section className="py-10 text-center">
-          <h2 className="text-[1.8rem] font-extrabold mb-7 uppercase text-brand-dark">MAIS VENDIDOS</h2>
+          <h2 className="text-[1.8rem] font-extrabold mb-7 uppercase text-brand-dark">FILTRO DE AR</h2>
           <div className="flex items-center justify-center gap-5 w-full max-w-[1500px] mx-auto px-4 lg:px-[5%] relative">
 
             <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory w-full md:justify-center">
