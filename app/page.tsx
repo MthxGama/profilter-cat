@@ -10,9 +10,27 @@ export default async function Home() {
 
   // Limitando cada sessão para exibir apenas 5 produtos
   const produtosMaisVendidos = produtos?.slice(0, 5) || [];
-  const produtosCombustivel = produtos.filter(produto =>  const tituloLower = produto.title.toLowerCase();
-  const produtosOleo = produtos?.filter(p => p.title.toLowerCase().includes('óleo')).slice(0, 5) || [];
-
+  const produtosCombustivel = produtos.filter(produto => {
+  const tituloLower = produto.title.toLowerCase();
+  
+  // Se tiver a palavra "kit" no nome, ele ignora e não mostra na lista
+  if (tituloLower.includes('kit')) {
+    return false;
+  }
+ // Se não for kit, ele verifica se é filtro de combustível (com ou sem acento)
+  return tituloLower.includes('combustível') || tituloLower.includes('combustivel');
+});
+ const produtosOleo = produtos.filter(produto => {
+  const tituloLower = produto.title.toLowerCase();
+  
+  // 1. Barra qualquer produto que tenha "kit" no nome
+  if (tituloLower.includes('kit')) {
+    return false;
+  }
+  
+  // 2. Se não for kit, busca por óleo (com ou sem acento)
+  return tituloLower.includes('óleo') || tituloLower.includes('oleo');
+});
 
   return (
     <div className="bg-brand-bg text-brand-dark font-sans antialiased min-h-screen">
