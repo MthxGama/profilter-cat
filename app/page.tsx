@@ -11,26 +11,26 @@ export default async function Home() {
   // Proteção: Garante que seja um array vazio caso o banco demore a responder
   const produtosLista = produtos || [];
 
-  // FILTRO: AR
+  // FILTRO: AR (Sem kits e limitado a 5)
   const produtosAr = produtosLista.filter(produto => {
     const tituloLower = produto.title.toLowerCase();
     if (tituloLower.includes('kit')) return false;
     return tituloLower.includes(' de ar');
-  });
+  }).slice(0, 5);
 
-  // FILTRO: COMBUSTÍVEL
+  // FILTRO: COMBUSTÍVEL (Sem kits e limitado a 5)
   const produtosCombustivel = produtosLista.filter(produto => {
     const tituloLower = produto.title.toLowerCase();
     if (tituloLower.includes('kit')) return false;
     return tituloLower.includes('combustível') || tituloLower.includes('combustivel');
-  });
+  }).slice(0, 5);
 
-  // FILTRO: ÓLEO
+  // FILTRO: ÓLEO (Sem kits e limitado a 5)
   const produtosOleo = produtosLista.filter(produto => {
     const tituloLower = produto.title.toLowerCase();
     if (tituloLower.includes('kit')) return false;
     return tituloLower.includes('óleo') || tituloLower.includes('oleo');
-  });
+  }).slice(0, 5);
 
   return (
     <div className="bg-brand-bg text-brand-dark font-sans antialiased min-h-screen">
@@ -89,8 +89,7 @@ export default async function Home() {
         <section className="py-10 text-center">
           <h2 className="text-[1.8rem] font-extrabold mb-7 uppercase text-brand-dark">FILTRO DE AR</h2>
           <div className="flex items-center justify-center gap-5 w-full max-w-[1500px] mx-auto px-4 lg:px-[5%] relative">
-
-            <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory w-full md:justify-center">
+            <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory w-full justify-start lg:justify-center mx-auto">
               {produtosAr.map((produto) => (
                 <Link href={`/produto/${produto.procod}`} key={produto.procod} className="bg-white border border-[#ccc] rounded-lg p-5 min-w-[240px] max-w-[240px] text-center snap-center hover:-translate-y-2 transition-all duration-300 block">
                   <div className="w-full h-32 flex items-center justify-center mb-4">
@@ -106,7 +105,6 @@ export default async function Home() {
                 </Link>
               ))}
             </div>
-
           </div>
         </section>
 
@@ -145,7 +143,7 @@ export default async function Home() {
         <section className="py-10 text-center">
           <h2 className="text-[1.8rem] font-extrabold mb-7 uppercase text-brand-dark">FILTROS DE COMBUSTÍVEL</h2>
           <div className="flex items-center justify-center gap-5 w-full max-w-[1500px] mx-auto px-4 lg:px-[5%] relative">
-            <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory w-full md:justify-center">
+            <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory w-full justify-start lg:justify-center mx-auto">
               
               {produtosCombustivel.map((produto) => (
                 <Link href={`/produto/${produto.procod}`} key={produto.procod} className="bg-white border border-[#ccc] rounded-lg p-5 min-w-[240px] max-w-[240px] text-center snap-center hover:-translate-y-2 transition-all duration-300 block">
@@ -182,7 +180,7 @@ export default async function Home() {
         <section className="py-10 text-center">
           <h2 className="text-[1.8rem] font-extrabold mb-7 uppercase text-brand-dark">FILTROS DE ÓLEO</h2>
           <div className="flex items-center justify-center gap-5 w-full max-w-[1500px] mx-auto px-4 lg:px-[5%] relative">
-            <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory w-full md:justify-center">
+            <div className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory w-full justify-start lg:justify-center mx-auto">
               {produtosOleo.map((produto) => (
                 <Link href={`/produto/${produto.procod}`} key={produto.procod} className="bg-white border border-[#ccc] rounded-lg p-5 min-w-[240px] max-w-[240px] text-center snap-center hover:-translate-y-2 transition-all duration-300 block">
                   <div className="w-full h-32 flex items-center justify-center mb-4">
