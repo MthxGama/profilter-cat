@@ -10,7 +10,7 @@ export default async function Home() {
 
   // Limitando cada sessão para exibir apenas 5 produtos
   const produtosMaisVendidos = produtos?.slice(0, 5) || [];
-  const produtosCombustivel = produtos?.filter(p => p.title.toLowerCase().includes('combustível')).slice(0, 5) || [];
+  const produtosCombustivel = produtos.filter(produto =>  const tituloLower = produto.title.toLowerCase();
   const produtosOleo = produtos?.filter(p => p.title.toLowerCase().includes('óleo')).slice(0, 5) || [];
 
 
